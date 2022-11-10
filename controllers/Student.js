@@ -11,6 +11,19 @@ exports.Student_list = async function(req, res) {
         res.send(`{"error": ${err}}`); 
     }   
 }; 
+
+// VIEWS 
+// Handle a show all view 
+exports.Student_view_all_Page = async function(req, res) { 
+    try{ 
+        theStudents = await Student.find(); 
+        res.render('Students', { title: 'Student Search Results', results: theStudents }); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
 // for a specific Student. 
 exports.Student_detail = function(req, res) { 
     res.send('NOT IMPLEMENTED: Student detail: ' + req.params.id); 
