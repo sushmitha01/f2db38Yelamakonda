@@ -96,4 +96,7 @@ instance3.save(function (err, doc) {
 
 }
 
+let reseed = true;
+if(reseed){recreateDB();}
+
 module.exports = app;
