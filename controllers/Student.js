@@ -17,7 +17,7 @@ exports.Student_list = async function(req, res) {
 exports.Student_view_all_Page = async function(req, res) { 
     try{ 
         theStudents = await Student.find(); 
-        res.render('Students', { title: 'Student Search Results', results: theStudents }); 
+        res.render('Student', { title: 'Student Search Results', results: theStudents }); 
     } 
     catch(err){ 
         res.status(500); 
@@ -30,9 +30,26 @@ exports.Student_detail = function(req, res) {
 }; 
  
 // Handle Student create on POST. 
-exports.Student_create_post = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Student create POST'); 
+exports.Student_create_post = async function(req, res) { 
+    console.log(req.body) 
+    let document = new Student(); 
+    // We are looking for a body, since POST does not have query parameters. 
+    // Even though bodies can be in many different formats, we will be picky 
+    // and require that it be a json object 
+    // {"costume_type":"goat", "cost":12, "size":"large"} 
+    document.Name = req.body.Name; 
+    document.Age = req.body.Age; 
+    document.Address = req.body.Address; 
+    try{ 
+        let result = await document.save(); 
+        res.send(result); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
+ 
  
 // Handle Student delete form on DELETE. 
 exports.Student_delete = function(req, res) { 
