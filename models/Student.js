@@ -1,8 +1,8 @@
 const mongoose = require("mongoose") 
 const StudentSchema = mongoose.Schema({ 
  Name: String, 
- Age: String, 
- Address: Number 
+ Age: Number, 
+ Address: String 
 }) 
  
 module.exports = mongoose.model("Student", 
