@@ -1,10 +1,16 @@
 var Student = require('../models/Student'); 
  
 // List of all Student 
-exports.Student_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Student list'); 
+exports.Student_list = async function(req, res) { 
+    try{ 
+        theStudents = await Student.find(); 
+        res.send(theStudents); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
- 
 // for a specific Student. 
 exports.Student_detail = function(req, res) { 
     res.send('NOT IMPLEMENTED: Student detail: ' + req.params.id); 
