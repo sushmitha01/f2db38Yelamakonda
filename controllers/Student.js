@@ -51,9 +51,17 @@ exports.Student_create_post = async function(req, res) {
 }; 
  
  
-// Handle Student delete form on DELETE. 
-exports.Student_delete = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Student delete DELETE ' + req.params.id); 
+// Handle Costume delete on DELETE. 
+exports.Student_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await Student.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
 }; 
  
 // Handle Costume update form on PUT. 
@@ -69,5 +77,40 @@ exports.Student_detail = async function(req, res) {
     } catch (error) { 
         res.status(500) 
         res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
+}; 
+
+// Handle Costume update form on PUT. 
+exports.Student_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await Student.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.Name)  
+               toUpdate.Name = req.body.Name; 
+        if(req.body.Age) toUpdate.Age = req.body.Age; 
+        if(req.body.Address) toUpdate.Address = req.body.Address; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
+    } 
+}; 
+
+ // Handle a show one view with id specified by query 
+ exports.Student_view_one_Page = async function(req, res) { 
+    console.log("single view for id "  + req.query.id) 
+    try{ 
+        result = await Student.findById( req.query.id) 
+        res.render('Studentdetail',  
+{ title: 'Student Detail', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
     } 
 }; 

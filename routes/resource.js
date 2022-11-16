@@ -28,4 +28,7 @@ router.get('/Students/:id', Student_controller.Student_detail);
  
 // GET request for list of all Costume items. 
 router.get('/Students', Student_controller.Student_list); 
+
+/* GET detail costume page */ 
+router.get('/detail', Student_controller.Student_view_one_Page); 
 module.exports = router; 
