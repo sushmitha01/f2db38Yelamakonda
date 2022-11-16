@@ -31,4 +31,13 @@ router.get('/Students', Student_controller.Student_list);
 
 /* GET detail costume page */ 
 router.get('/detail', Student_controller.Student_view_one_Page); 
+
+/* GET create costume page */ 
+router.get('/create', Student_controller.Student_create_Page); 
+
+router.get('/update', Student_controller.Student_update_Page); 
+
+/* GET delete costume page */ 
+router.get('/delete', Student_controller.Student_delete_Page); 
+ 
 module.exports = router; 
