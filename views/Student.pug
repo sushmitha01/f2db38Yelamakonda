@@ -1,14 +1,16 @@
-extends layout
+extends layout 
 
-block content
-  h1= title
-  - let Students = results
- 
-    
+block content 
+    h1= title
+    div.container-fluid
+        div(class ="row m-1")
+            each item, index in results
+                - let destination = `dispatch(\"/resource/update?id=${item._id}\")`
+                div.col-sm-2(onclick=`buy(${index})`) #{item["Name"]}, #{item["Age"]}, #{item["Address"]}
+                    br
+                    button.btn( class="btn-primary ml-1", onclick= destination) Update
 
-  div(class="container-fluid")
-    div(class="row")
-      each item,index  in Students
-        div(class="col-sm-2" onclick=`buy(${index})`) Name is #{item.Name} <br /> Age is #{item.Age} <br /> Address is #{item.Address}
-  script.
-    function buy(x){alert(`You purchased item ${x}`)}
+    script. 
+        function dispatch(path) {
+            window.location.href=path
+        }
