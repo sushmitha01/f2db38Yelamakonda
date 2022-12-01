@@ -7,6 +7,13 @@ var router = express.Router();
 var api_controller = require('../controllers/api'); 
 var Student_controller = require('../controllers/Student'); 
  
+const secured = (req, res, next) => {
+    if (req.user) {
+        return next();
+    }
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+}
 /// API ROUTE /// 
  
 // GET resources base. 
@@ -33,11 +40,11 @@ router.get('/Students', Student_controller.Student_list);
 router.get('/detail', Student_controller.Student_view_one_Page); 
 
 /* GET create costume page */ 
-router.get('/create', Student_controller.Student_create_Page); 
+router.get('/create', secured, Student_controller.Student_create_Page); 
 
-router.get('/update', Student_controller.Student_update_Page); 
+router.get('/update', secured, Student_controller.Student_update_Page); 
 
 /* GET delete costume page */ 
-router.get('/delete', Student_controller.Student_delete_Page); 
+router.get('/delete', secured, Student_controller.Student_delete_Page); 
  
 module.exports = router; 
